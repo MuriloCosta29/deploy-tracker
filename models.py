@@ -24,3 +24,4 @@ class Deploy(Base):
     version = Column(String)
     status = Column(Boolean)
     created_at = Column(DateTime, server_default=func.now())
+
