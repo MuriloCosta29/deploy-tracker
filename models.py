@@ -1,3 +1,5 @@
+# NOTE:  Defines the database tables as Python classes (Application, Deploy)
+
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy import func
 from database import Base
@@ -24,4 +26,3 @@ class Deploy(Base):
     version = Column(String)
     status = Column(Boolean)
     created_at = Column(DateTime, server_default=func.now())
-
