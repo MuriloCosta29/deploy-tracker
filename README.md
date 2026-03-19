@@ -16,7 +16,7 @@ An application that logs and monitors application deployments. Once an app is de
 
 ## Roadmap
 
-- [ ] Week 1: FastAPI + PostgreSQL (API core + database)
+- [x] Week 1: FastAPI + PostgreSQL (API core + database)
 - [ ] Week 2: Redis (caching layer)
 - [ ] Week 3: Celery/ARQ (async workers + health checks)
 - [ ] Week 4: Prometheus (metrics collection)
