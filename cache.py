@@ -4,14 +4,12 @@
 import redis
 import json
 
-from redis.typing import ExpiryT
-
 # -------------------------------------------------
 
 r = redis.Redis(host="localhost", port=6379, decode_responses=True)
 # decode_responses means -> Redis returns strings instead of bytes, which is easier to work with.
 # -------------------------------------------------
-# json.dumps() -> Convert Python to string.
+# json.dumps() -> Convert Python(dicts and lists) to JSON-string.
 # json.loads() -> Convert JSON string back to python
 
 # -------------------------------------------------
@@ -32,6 +30,7 @@ def get_cache(key):
 
 # -------------------------------------------------
 # Converts data to JSON and stores in Redis
+# `ex=300` sets the key to expire automatically after 300 seconds(5 minutes).
 def set_cache(key, data):
     value = json.dumps(data)
     r.set(key, value, ex=300)
