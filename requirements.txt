@@ -3,3 +3,4 @@ fastapi
 psycopg2-binary
 uvicorn
 redis
+celery
