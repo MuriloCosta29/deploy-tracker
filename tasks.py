@@ -1,7 +1,26 @@
+import requests
 from celery_app import celery_app
+from database import SessionLocal
+from models import Application, HealthCheck
 # -------------------------------------------------
 
 
 @celery_app.task
-def hello():
-    return "hello, world!"
+def health_checker(application_id):
+    db = SessionLocal()
+    app_class = db.query(Application).filter(Application.id == application_id).first()
+    response = requests.get(app_class.url)  # Get the application url
+    status_code = response.status_code
+    is_up = status_code == 200
+
+    time = response.elapsed.total_seconds()
+
+    new_check = HealthCheck(
+        application_id=application_id,
+        status=is_up,
+        http_code=response.status_code,
+        response_time=time,
+    )
+    db.add(new_check)
+    db.commit()
+    db.close()  # Need to close manually, because i don't have `get_session` to close the session automatically.
