@@ -8,3 +8,13 @@ celery_app = Celery(
     broker="redis://localhost:6379/0",
     backend="redis://localhost:6379/0",
 )
+
+celery_app.conf.beat_schedule = {
+    "health_check_30s": {
+        "task": "tasks.health_checker",
+        "schedule": 30.0,  # segundos
+        "args": (1,),
+    },
+}
+
+celery_app.conf.timezone = "UTC"
