@@ -208,3 +208,6 @@ __marimo__/
 
 # Pyright config for nvim
 pyrightconfig.json
+
+# My personal notes about project.
+notes_project.md
