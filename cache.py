@@ -3,11 +3,11 @@
 
 import redis
 import json
+
 # -------------------------------------------------
 
 r = redis.Redis(host="localhost", port=6379, decode_responses=True)
-# decode_responses means -> Redis returns strings instead of bytes, which is easier to work with.
-# -------------------------------------------------
+# decode_responses means -> Redis returns strings instead of bytes, which is easier to work with. -------------------------------------------------
 # json.dumps() -> Convert Python(dicts and lists) to JSON-string.
 # json.loads() -> Convert JSON string back to python
 
@@ -28,13 +28,27 @@ def get_cache(key):
 
 
 # -------------------------------------------------
+
+
+def to_dict(obj):
+    return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
+
+
+# -------------------------------------------------
+
+
 # Converts data to JSON and stores in Redis
 # `ex=300` sets the key to expire automatically after 300 seconds(5 minutes).
+#
 def set_cache(key, data):
-    value = json.dumps(data)
+    data = [to_dict(item) for item in data]
+    value = json.dumps(data, default=str)
     r.set(key, value, ex=300)
 
 
 # -------------------------------------------------
 def delete_cache(key):
     r.delete(key)
+
+
+# -------------------------------------------------

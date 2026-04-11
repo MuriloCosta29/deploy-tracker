@@ -14,10 +14,13 @@ from cache import get_cache, set_cache, delete_cache
 # POST /applications - create
 # PATCH /applications/{id} - edit
 # DELETE /applications/{id} - delete
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 router = APIRouter()
 
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+# FATHER -> Because without him, we don't have deploy and health check.
+# ------------------------------------------------------------------------
 
 
 @router.get("/applications")
@@ -30,7 +33,7 @@ def list_applications(db: Session = Depends(get_session)):
     return applications
 
 
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 
 @router.get("/applications/{id}")
@@ -80,3 +83,6 @@ def change_app(
     delete_cache("applications_all")
     db.refresh(changing_app)
     return changing_app
+
+
+# ------------------------------------------------------------------------------------------------
