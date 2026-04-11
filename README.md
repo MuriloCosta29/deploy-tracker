@@ -18,7 +18,7 @@ An application that logs and monitors application deployments. Once an app is de
 
 - [x] Week 1: FastAPI + PostgreSQL (API core + database)
 - [x] Week 2: Redis (caching layer)
-- [ ] Week 3: Celery/ARQ (async workers + health checks)
+- [x] Week 3: Celery/ARQ (async workers + health checks)
 - [ ] Week 4: Prometheus (metrics collection)
 - [ ] Week 5: Grafana (monitoring dashboards)
 - [ ] Week 6: GitHub Actions (CI/CD pipeline)
