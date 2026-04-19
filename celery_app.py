@@ -12,7 +12,7 @@ celery_app = Celery(
 celery_app.conf.beat_schedule = {
     "health_check_30s": {
         "task": "tasks.health_checker",
-        "schedule": 30.0,  # segundos
+        "schedule": 30.0,  # seconds
         "args": (1,),
     },
 }

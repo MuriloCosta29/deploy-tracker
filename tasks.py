@@ -3,6 +3,8 @@ from celery_app import celery_app
 from database import SessionLocal
 from models import Application, HealthCheck
 # -------------------------------------------------
+# 200 -> OK | 404 -> Not Found | 500 -> Error
+# -------------------------------------------------
 
 
 @celery_app.task
@@ -13,7 +15,7 @@ def health_checker(application_id):
     status_code = response.status_code
     is_up = status_code == 200
 
-    time = response.elapsed.total_seconds()
+    time = response.elapsed.total_seconds()  # Time it took the website to respond.
 
     new_check = HealthCheck(
         application_id=application_id,

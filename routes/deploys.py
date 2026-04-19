@@ -42,6 +42,7 @@ def one_deploy(id: int, db: Session = Depends(get_session)):
 
 
 # --------------------------------------------------------------------------------
+# Important rule! Left = database(Model) | Right = User(Schema)
 
 
 @router.post("/deploys")
@@ -50,6 +51,7 @@ def create_deploy(deploy_data: DeployItem, db: Session = Depends(get_session)):
         version=deploy_data.version,
         status=deploy_data.status,
         application_id=deploy_data.application_id,
+        # 👆 the left side comes from models.py | Right side comes from schemas.py
     )
     db.add(new_deploy)
     db.commit()
