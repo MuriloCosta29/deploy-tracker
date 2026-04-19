@@ -28,7 +28,7 @@ def list_applications(db: Session = Depends(get_session)):
     cached = get_cache("applications_all")
     if cached:
         return cached
-    applications = db.query(Application).all()
+    applications = db.query(Application).all()  # Don't find Redis -> Go PostgreSQL.
     set_cache("applications_all", applications)
     return applications
 

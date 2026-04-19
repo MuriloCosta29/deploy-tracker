@@ -19,8 +19,10 @@ r = redis.Redis(host="localhost", port=6379, decode_responses=True)
 
 
 def get_cache(key):
-    value = r.get(key)
-    if value is not None:
+    value = r.get(key)  # Search for one key, example: "applications_all"
+    if (
+        value is not None
+    ):  # Redis only saves (String/JSON) | FastAPI needs (Lists/dicts) to work. | I use json.loads to translate the text back into Python.
         new_value = json.loads(value)
         return new_value
 
