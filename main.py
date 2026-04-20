@@ -22,6 +22,7 @@ metrics_app = make_asgi_app()
 
 
 # -----------------------------------------------------------------------
+# WARNING: Revise
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.perf_counter()
@@ -30,8 +31,7 @@ async def add_process_time_header(request: Request, call_next):
 
     method = request.method
     status_code_str = str(response.status_code)
-    route = request.scope.get("route")
-    endpoint = route.path if route else "unmatched_route"
+    endpoint = request.url.path
 
     REQUEST_COUNT.labels(method=method, endpoint=endpoint, status=status_code_str).inc()
 
