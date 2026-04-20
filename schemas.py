@@ -1,7 +1,8 @@
 # NOTE: Define the shape of data the client sends and receives. Uses Pydantic to validate request bodies before they reach the database.
-#-------------------------------------------
+# -------------------------------------------
 from pydantic import BaseModel
 from datetime import datetime
+
 
 class ApplicationItem(BaseModel):  # This schema defines what the client sends.
     name: str
@@ -14,7 +15,7 @@ class DeployItem(BaseModel):
     application_id: int
 
 
-class HealthCheck(BaseModel): # CORRECT ✅
+class HealthCheck(BaseModel):
     application_id: int
     status: bool
     response_time: float

@@ -6,13 +6,10 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from models import HealthCheck
 from database import get_session
-from cache import get_cache, set_cache, delete_cache
+from cache import get_cache, set_cache
 
 # -------------------------------------------------------------------------
 router = APIRouter()
-
-
-# TODO: Create endpoint to view health check history
 
 
 @router.get("/applications/{id}/healthchecks")
