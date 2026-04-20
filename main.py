@@ -7,8 +7,10 @@ from routes.applications import router as applications_router
 from routes.deploys import router as deploys_router
 from routes.health_checks import router as health_checks_router
 from database import Base, engine
+from prometheus_client import make_asgi_app
 
 # ------------------------------------------------------------------------
+metrics_app = make_asgi_app()
 
 app = FastAPI()
 app.include_router(applications_router)
@@ -27,3 +29,6 @@ Base.metadata.create_all(
 @app.get("/")
 def health_check():
     return {"status": "The app in main.py is working"}
+
+
+app.mount("/metrics", metrics_app)
