@@ -1,0 +1,26 @@
+# name — what to call the pipeline
+# on — when to run (on push, on pull request, etc.)
+# jobs — what to do (each job has steps)
+
+name: CI 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4
+
+      - name: Use Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install Dependencies
+        uses: pip install -r requirements.txt
