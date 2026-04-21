@@ -23,6 +23,7 @@ def health_checker(application_id):
         http_code=response.status_code,
         response_time=time,
     )
+
     db.add(new_check)
     db.commit()
     db.close()  # Need to close manually, because i don't have `get_session` to close the session automatically.
