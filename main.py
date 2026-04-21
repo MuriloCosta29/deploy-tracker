@@ -1,6 +1,7 @@
 # NOTE: Entry point of application. Creates the FastAPI and connects all routers.
 # NOTE: `as` set a nickname for import
-# ------------------------------------------------------------------------
+# -----------------------------------------------------------------------
+
 import time
 from fastapi import FastAPI, Request
 from routes.applications import router as applications_router
@@ -10,16 +11,17 @@ from database import Base, engine
 from prometheus_client import make_asgi_app
 from metrics import REQUEST_COUNT, REQUEST_LATENCY
 
-# ------------------------------------------------------------------------
-metrics_app = make_asgi_app()
+# -----------------------------------------------------------------------
+# middleware (code that runs before and after every request).
+# -----------------------------------------------------------------------
 
 app = FastAPI()
 app.include_router(applications_router)
 app.include_router(deploys_router)
 app.include_router(health_checks_router)
+metrics_app = make_asgi_app()
 
-# ------------------------------------------------------------------------
-
+# -----------------------------------------------------------------------
 
 @app.middleware("http")
 async def track_requests(request: Request, call_next):
