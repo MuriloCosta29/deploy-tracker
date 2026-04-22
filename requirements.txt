@@ -6,3 +6,5 @@ redis
 celery
 requests
 prometheus-client
+ruff
+pytest
