@@ -8,3 +8,4 @@ requests
 prometheus-client
 ruff
 pytest
+httpx

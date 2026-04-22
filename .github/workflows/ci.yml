@@ -13,6 +13,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: deploy_tracker
+          POSTGRES_PASSWORD: password 
+          POSTGRES_DB: deploy_tracker
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U deploy_tracker"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout code 
         uses: actions/checkout@v5
