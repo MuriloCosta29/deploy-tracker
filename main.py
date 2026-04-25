@@ -23,6 +23,7 @@ metrics_app = make_asgi_app()
 
 # -----------------------------------------------------------------------
 
+
 @app.middleware("http")
 async def track_requests(request: Request, call_next):
     start_time = time.perf_counter()
