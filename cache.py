@@ -3,10 +3,12 @@
 
 import redis
 import json
+import os
 
 # -------------------------------------------------
-
-r = redis.Redis(host="redis", port=6379, decode_responses=True)
+REDIS_HOST = os.getenv("REDIS_HOST", "redis")
+# -------------------------------------------------
+r = redis.Redis(host=REDIS_HOST, port=6379, decode_responses=True)
 # decode_responses means -> Redis returns strings instead of bytes, which is easier to work with. -------------------------------------------------
 # json.dumps() -> Convert Python(dicts and lists) to JSON-string.
 # json.loads() -> Convert JSON string back to python
