@@ -4,32 +4,37 @@
 
 name: CI # Workflow name
 
-on: # Defines WHEN the workflow runs
-  push: # Triggers when code is pushed
-    branches: [ "main" ] # Only runs if the push is to the "main" branch
-  pull_request: # Triggers when a Pull Request is opened, upadate, or reopened
+on:
+  # Defines WHEN the workflow runs
+  push:
+    # Triggers when code is pushed
+    branches: ["main"] # Only runs if the push is to the "main" branch
+  pull_request:
+    # Triggers when a Pull Request is opened, upadate, or reopened
 
-jobs: # Group of jobs to be executed.
+jobs:
+  # Group of jobs to be executed.
   build:
     runs-on: ubuntu-latest
 
-    services: # Extra containers that run alongside the job
-      postgres: # Service name (Used internally for reference)
+    services:
+      # Extra containers that run alongside the job
+      postgres:
+        # Service name (Used internally for reference)
         image: postgres:17 # Docker image for PostgreSQL
-        env: # Environment variables to configure the database
+        env:
+          # Environment variables to configure the database
           POSTGRES_USER: deploy_tracker
-          POSTGRES_PASSWORD: password 
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: deploy_tracker
         ports:
           - 5432:5432 # Container port of db
         options: >-
-          --health-cmd="pg_isready -U deploy_tracker"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+          --health-cmd="pg_isready -U deploy_tracker" --health-interval=10s
+          --health-timeout=5s --health-retries=5
 
     steps:
-      - name: Checkout code 
+      - name: Checkout code
         uses: actions/checkout@v5
 
       - name: Use Python
@@ -46,8 +51,10 @@ jobs: # Group of jobs to be executed.
         run: python -m ruff check .
 
       - name: Run tests
+        env:
+          DB_HOST: localhost
+          REDIS_HOST: localhost
         run: pytest
 
       - name: Build Docker Image
         run: docker build -t deploy-tracker .
-

@@ -1,12 +1,13 @@
 from celery import Celery
+from cache import REDIS_HOST
 
 # -------------------------------------------------
 
 # the name can't have uppercase or space.
 celery_app = Celery(
     "deploy_tracker",
-    broker="redis://redis:6379/0",
-    backend="redis://redis:6379/0",
+    broker=f"redis://{REDIS_HOST}:6379/0",
+    backend=f"redis://{REDIS_HOST}:6379/0",
 )
 
 # Write about: What is Celery Beat? What the function of Celery Beat?
@@ -14,7 +15,9 @@ celery_app.conf.beat_schedule = {
     "health_check_30s": {
         "task": "tasks.health_checker",
         "schedule": 30.0,  # seconds
-        "args": (1,),
+        "args": (
+            1,
+        ),  # TODO: Dynamically check all registered applications instead of hardcoded id
     },
 }
 
