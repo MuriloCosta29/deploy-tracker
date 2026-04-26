@@ -16,5 +16,5 @@ RUN pip install --no-cache-dir --upgrade -r /usr/local/code/requirements.txt
 # no-cache-dir -> tells pip to not save the downloaded packages locally. Only related to pip!
 # upgrade -> updgrade packages if they already installed
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 # Execute the code will run in the CMD.

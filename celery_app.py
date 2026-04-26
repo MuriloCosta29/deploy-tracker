@@ -5,8 +5,8 @@ from celery import Celery
 # the name can't have uppercase or space.
 celery_app = Celery(
     "deploy_tracker",
-    broker="redis://localhost:6379/0",
-    backend="redis://localhost:6379/0",
+    broker="redis://redis:6379/0",
+    backend="redis://redis:6379/0",
 )
 
 # Write about: What is Celery Beat? What the function of Celery Beat?
