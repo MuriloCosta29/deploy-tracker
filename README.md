@@ -27,3 +27,6 @@ An application that logs and monitors application deployments. Once an app is de
 
 ## Architecture
 ![Architecture Diagram](docs/architecture.png)
+
+## Monitoring Dashboard
+![Grafana Dashboard](docs/grafana-dashboard.png)
