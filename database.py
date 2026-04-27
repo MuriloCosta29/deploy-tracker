@@ -6,12 +6,15 @@ import os
 
 # ------------------------------------------------------
 
+# DB_HOST defaults to "db" for Docker Compose, override with env variable for other environments.
 DB_HOST = os.getenv("DB_HOST", "db")
 
 # ------------------------------------------------------
+
 engine = create_engine(
     f"postgresql+psycopg2://deploy_tracker:password@{DB_HOST}/deploy_tracker"
-)  # DB_HOST defaults to "db" for Docker Compose, override with env variable for other environments.
+)
+
 # ------------------------------------------------------
 
 

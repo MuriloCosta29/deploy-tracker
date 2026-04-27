@@ -1,5 +1,4 @@
 # NOTE: Entry point of application. Creates the FastAPI and connects all routers.
-# NOTE: `as` set a nickname for import
 # -----------------------------------------------------------------------
 
 import time
@@ -12,7 +11,7 @@ from prometheus_client import make_asgi_app
 from metrics import REQUEST_COUNT, REQUEST_LATENCY
 
 # -----------------------------------------------------------------------
-# middleware (code that runs before and after every request).
+# middleware track request count and latency
 # -----------------------------------------------------------------------
 
 app = FastAPI()
@@ -39,13 +38,11 @@ async def track_requests(request: Request, call_next):
     return response
 
 
-# ------------------------------------------------------------------------
+# -----------------------------------------------------------------------
 
-Base.metadata.create_all(
-    bind=engine
-)  # Creates the table in the database (not file! File is the SQLite. Now is database, only.)
+Base.metadata.create_all(bind=engine)  # Creates database table on startup
 
-# ------------------------------------------------------------------------
+# -----------------------------------------------------------------------
 
 
 @app.get("/")

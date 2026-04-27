@@ -2,9 +2,8 @@ import requests
 from celery_app import celery_app
 from database import SessionLocal
 from models import Application, HealthCheck
-# -------------------------------------------------
-# 200 -> OK | 404 -> Not Found | 500 -> Error
-# -------------------------------------------------
+
+# -----------------------------------------------------
 
 
 @celery_app.task
@@ -26,4 +25,4 @@ def health_checker(application_id):
 
     db.add(new_check)
     db.commit()
-    db.close()  # Need to close manually, because i don't have `get_session` to close the session automatically.
+    db.close()  # Need to close manully, (no FastAPI dependency injection here).
