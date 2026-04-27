@@ -1,4 +1,5 @@
 # NOTE: All endpoints related to the /applications resource
+# ------------------------------------------------------------------------
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -7,8 +8,7 @@ from database import get_session
 from schemas import ApplicationItem
 from cache import get_cache, set_cache, delete_cache
 
-# Route files create routers -- Smaller groups of routes that plug into the
-# main.app
+
 # GET /applications - List all
 # GET /applications/{id} - get one
 # POST /applications - create
@@ -19,8 +19,6 @@ from cache import get_cache, set_cache, delete_cache
 router = APIRouter()
 
 # ------------------------------------------------------------------------
-# FATHER -> Because without him, we don't have deploy and health check.
-# ------------------------------------------------------------------------
 
 
 @router.get("/applications")
@@ -28,7 +26,7 @@ def list_applications(db: Session = Depends(get_session)):
     cached = get_cache("applications_all")
     if cached:
         return cached
-    applications = db.query(Application).all()  # Don't find Redis -> Go PostgreSQL.
+    applications = db.query(Application).all()  # Cache miss, query database
     set_cache("applications_all", applications)
     return applications
 
@@ -42,7 +40,7 @@ def one_application(id: int, db: Session = Depends(get_session)):
     return one_application
 
 
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 
 @router.post("/applications")
@@ -57,7 +55,7 @@ def create_application(
     return new_app
 
 
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 
 @router.delete("/applications/{id}")
@@ -69,7 +67,7 @@ def delete_application(id: int, db: Session = Depends(get_session)):
     return del_app
 
 
-# ------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 
 @router.patch("/applications/{id}")
@@ -85,4 +83,4 @@ def change_app(
     return changing_app
 
 
-# ------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------

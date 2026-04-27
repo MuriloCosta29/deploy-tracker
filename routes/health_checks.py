@@ -1,5 +1,4 @@
-# ------------------------------------------------------------------------
-# Grandson.
+# NOTE: All endpoints related to the /healthchecks resource.
 # -------------------------------------------------------------------------
 
 from fastapi import APIRouter, Depends
@@ -10,7 +9,10 @@ from cache import get_cache, set_cache
 from metrics import HEALTH_CHECK_UP
 
 # -------------------------------------------------------------------------
+
 router = APIRouter()
+
+# -------------------------------------------------------------------------
 
 
 @router.get("/applications/{id}/healthchecks")

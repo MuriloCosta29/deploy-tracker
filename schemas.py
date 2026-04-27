@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class ApplicationItem(BaseModel):  # This schema defines what the client sends.
+class ApplicationItem(BaseModel):
     name: str
     url: str
 
@@ -15,7 +15,7 @@ class DeployItem(BaseModel):
     application_id: int
 
 
-class HealthCheck(BaseModel):
+class HealthCheckItem(BaseModel):
     application_id: int
     status: bool
     response_time: float

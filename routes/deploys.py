@@ -5,7 +5,7 @@
 # PATCH /deploys/{id} - edit
 # DELETE /deploys/{id} - delete
 
-# --------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -18,9 +18,6 @@ from cache import get_cache, set_cache, delete_cache
 
 router = APIRouter()
 
-
-# --------------------------------------------------------------------------------
-# Son.
 # --------------------------------------------------------------------------------
 
 
@@ -44,7 +41,6 @@ def one_deploy(id: int, db: Session = Depends(get_session)):
 
 
 # --------------------------------------------------------------------------------
-# Important rule! Left = database(Model) | Right = User(Schema)
 
 
 @router.post("/deploys")
@@ -53,7 +49,6 @@ def create_deploy(deploy_data: DeployItem, db: Session = Depends(get_session)):
         version=deploy_data.version,
         status=deploy_data.status,
         application_id=deploy_data.application_id,
-        # 👆 the left side comes from models.py | Right side comes from schemas.py
     )
     db.add(new_deploy)
     db.commit()
@@ -77,7 +72,6 @@ def delete_deploy(id: int, db: Session = Depends(get_session)):
 # --------------------------------------------------------------------------------
 
 
-# WARNING: Revise this!!!
 @router.patch("/deploys/{id}")
 def change_deploy(id: int, deploy_data: DeployItem, db: Session = Depends(get_session)):
     changing_deploy = db.query(Deploy).filter(Deploy.id == id).first()
