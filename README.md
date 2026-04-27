@@ -23,7 +23,7 @@ An application that logs and monitors application deployments. Once an app is de
 - [x] Week 5: Grafana (monitoring dashboards)
 - [x] Week 6: GitHub Actions (CI/CD pipeline)
 - [x] Week 7: Nginx (reverse proxy) + Docker Compose (full orchestration)
-- [ ] Week 8: README polish, tests, final refinements
+- [x] Week 8: README polish, tests, final refinements
 
 ## Architecture
 ![Architecture Diagram](docs/architecture.png)
