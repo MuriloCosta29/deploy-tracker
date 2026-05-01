@@ -24,6 +24,25 @@ An application that logs and monitors application deployments. Once an app is de
 - [x] Week 6: GitHub Actions (CI/CD pipeline)
 - [x] Week 7: Nginx (reverse proxy) + Docker Compose (full orchestration)
 - [x] Week 8: README polish, tests, final refinements
+- [ ] Week 9: Fixing the Gaps
+
+
+
+## Why Week 9?
+
+This project was originally marked as completed after Week 8. At that point, I had already built the API, database layer, cache, async worker, metrics, dashboard, CI pipeline, reverse proxy, and Docker Compose setup.
+
+But during the final testing phase, I found a problem: the health check workflow was still tied to a hardcoded application id instead of monitoring all registered applications dynamically.
+
+My first instinct was to move on.
+
+I wanted to start the next project, keep building my portfolio, and get closer to my goal of becoming a DevOps / Platform Engineer before 25. But that ambition created a bad trade-off: I was about to leave behind a known flaw in a project that was supposed to document not only what worked, but also what failed.
+
+Week 9 exists because of that.
+
+**What I learned:** ambition is useful, but it needs discipline. Being focused and ambitious is not just about moving fast; it is also about knowing when to slow down and fix a known flaw.
+
+Cool mind, warm heart.
 
 ## Architecture
 ![Architecture Diagram](docs/architecture.png)
