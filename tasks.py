@@ -6,23 +6,38 @@ from models import Application, HealthCheck
 # -----------------------------------------------------
 
 
-@celery_app.task
-def health_checker(application_id):
-    db = SessionLocal()
-    app_class = db.query(Application).filter(Application.id == application_id).first()
-    response = requests.get(app_class.url)  # Get the application url
-    status_code = response.status_code
-    is_up = status_code == 200
-
-    time = response.elapsed.total_seconds()  # Time it took the website to respond.
+def check_single_application(db, application):
+    try:
+        response = requests.get(application.url, timeout=5)
+        status = response.status_code == 200
+        http_code = response.status_code
+        response_time = response.elapsed.total_seconds()
+    except requests.RequestException:
+        status = False
+        http_code = 0
+        response_time = 0
 
     new_check = HealthCheck(
-        application_id=application_id,
-        status=is_up,
-        http_code=response.status_code,
-        response_time=time,
+        application_id=application.id,
+        status=status,
+        http_code=http_code,
+        response_time=response_time,
     )
 
     db.add(new_check)
     db.commit()
-    db.close()  # Need to close manully, (no FastAPI dependency injection here).
+
+
+# -----------------------------------------------------
+
+
+@celery_app.task
+def check_all_applications():
+    db = SessionLocal()
+    try:
+        applications = db.query(Application).all()
+
+        for application in applications:
+            check_single_application(db, application)
+    finally:
+        db.close()
