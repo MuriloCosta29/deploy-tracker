@@ -24,9 +24,9 @@ jobs:
         image: postgres:17 # Docker image for PostgreSQL
         env:
           # Environment variables to configure the database
-          POSTGRES_USER: deploy_tracker
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: deploy_tracker
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_PASSWORD
         ports:
           - 5432:5432 # Container port of db
         options: >-
