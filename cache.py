@@ -6,9 +6,23 @@ import json
 import os
 
 # -------------------------------------------------
-REDIS_HOST = os.getenv("REDIS_HOST", "redis")
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+
+required_envs = {
+    "REDIS_HOST": REDIS_HOST,
+    "REDIS_PORT": REDIS_PORT,
+}
+
+missings_env = [name for name, value in required_envs.items() if value is None]
+
+if missings_env:
+    raise RuntimeError(
+        f"Missing required environments variables: {', '.join(missings_env)}"
+    )
+
 # -------------------------------------------------
-r = redis.Redis(host=REDIS_HOST, port=6379, decode_responses=True)
+r = redis.Redis(host=REDIS_HOST, port=int(REDIS_PORT), decode_responses=True)
 # decode_responses means -> Redis returns strings instead of bytes, which is easier to work with.
 # --------------------------------------------------
 
