@@ -4,9 +4,9 @@ services:
     image: postgres:17
     restart: always
     environment:
-      POSTGRES_USER: deploy_tracker
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: deploy_tracker
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - 5432:5432
     volumes:
@@ -22,19 +22,45 @@ services:
     build: .
     ports:
       - 8000:8000
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     depends_on:
       - db
       - redis
 
   celery_worker:
     build: .
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     depends_on:
+      - db
       - redis
     command: celery -A celery_app worker
 
   celery_beat:
     build: .
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     depends_on:
+      - db
       - redis
     command: celery -A celery_app beat
 
