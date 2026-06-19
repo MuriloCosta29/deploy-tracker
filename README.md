@@ -1,9 +1,11 @@
 # Deploy Tracker
+
 Deploy monitoring dashboard with observability.
 
 An application that logs and monitors application deployments. Once an app is deployed, Deploy Tracker collects metrics, displays the status, shows logs, and triggers alerts if downtime occurs.
 
 ## Tech Stack
+
 - FastAPI
 - PostgreSQL
 - Redis
@@ -24,9 +26,7 @@ An application that logs and monitors application deployments. Once an app is de
 - [x] Week 6: GitHub Actions (CI/CD pipeline)
 - [x] Week 7: Nginx (reverse proxy) + Docker Compose (full orchestration)
 - [x] Week 8: README polish, tests, final refinements
-- [ ] Week 9: Fixing the Gaps
-
-
+- [x] Week 9: Fixing the Gaps
 
 ## Why Week 9?
 
@@ -42,43 +42,53 @@ Week 9 exists because of that.
 
 **What I learned:** ambition is useful, but it needs discipline. Being focused and ambitious is not just about moving fast; it is also about knowing when to slow down and fix a known flaw.
 
-Cool mind, warm heart.
+## Technical Decisions
+
+While building Deploy Tracker, I realized I hadn't really *chosen* my tools — I had followed a recipe. That led me to study System Design and the idea that there's no "best stack", only the right context for a trade-off (Redis vs RabbitMQ, Celery vs ARQ, and so on).
+
+I wrote about the whole reasoning here:
+
+📖 [What I Learned About System Design Building Deploy Tracker](https://murilocosta29.github.io/blog/system-design/)
 
 ## Architecture
+
 ![Architecture Diagram](docs/architecture.png)
 
 ## Monitoring Dashboard
+
 ![Grafana Dashboard](docs/grafana-dashboard.png)
 
 ## How to Run
 
 ### Prerequisites
+
 - Docker
 - Docker Compose
 
 ### Setup
-1. Clone the repository  
-`git clone https://github.com/MuriloCosta29/deploy-tracker.git` 
 
-2. Enter in folder  
-`cd deploy-tracker`  
+1. Clone the repository
+`git clone https://github.com/MuriloCosta29/deploy-tracker.git`
 
-3. Start all services  
-`docker compose up --build`  
+2. Enter the folder
+`cd deploy-tracker`
 
-4. Access the services  
+3. Start all services
+`docker compose up --build`
 
-- **API:** http://localhost:8000
-- **Swagger Docs:** http://localhost:8000/docs
-- **Prometheus:** http://localhost:9090
-- **Grafana:** http://localhost:3000 (admin/admin)
-- **Nginx:** http://localhost
+4. Access the services
 
+- **API:** <http://localhost:8000>
+- **Swagger Docs:** <http://localhost:8000/docs>
+- **Prometheus:** <http://localhost:9090>
+- **Grafana:** <http://localhost:3000> (admin/admin)
+- **Nginx:** <http://localhost>
 
-5. Create an application to monitor  
-- Open Swagger at http://localhost:8000/docs
-- POST /applications with a name and URL (e.g., https://google.com)
+1. Create an application to monitor
+
+- Open Swagger at <http://localhost:8000/docs>
+- POST /applications with a name and URL (e.g., <https://google.com>)
 - Health checks will run automatically every 30 seconds
 
-6. Stop all services  
+1. Stop all services
 `docker compose down`
